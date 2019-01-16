@@ -1,0 +1,1836 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>alxbrn-api</name>
+    </assembly>
+    <members>
+        <member name="M:alxbrn_api.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:alxbrn_api.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:alxbrn_api.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,alxbrn_api.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,alxbrn_api.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:alxbrn_api.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},alxbrn_api.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:alxbrn_api.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:alxbrn_api.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.#ctor(alxbrn_api.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:alxbrn_api.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,alxbrn_api.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:alxbrn_api.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:alxbrn_api.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:alxbrn_api.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:alxbrn_api.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:alxbrn_api.Controllers.AuthorizeController">
+            <summary>
+            Controller for managing all Authorize related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.AuthorizeController.Get">
+            <summary>
+            Gets a list of all authorized applications
+            </summary>
+            <returns>List AppDto</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.AuthorizeController.Post(alxbrn_api.DTOs.AuthorizeRequestDto)">
+            <summary>
+            Creates a new authorized application
+            </summary>
+            <param name="request">AuthorizeRequestDto</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.CategoriesController">
+            <summary>
+            Controller for managing all Category related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.GetCategories">
+            <summary>
+            Gets all categories in a xlm or json format
+            </summary>
+            <returns>Category</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.GetCategories(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of categories
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>Category</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.GetCategory(System.Int32)">
+            <summary>
+            Gets a specific category with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>Category</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.PutCategory(System.Int32,alxbrn_api.Models.Category)">
+            <summary>
+            Updates a specific category with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">category</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.PostCategory(alxbrn_api.Models.Category)">
+            <summary>
+            Creates a new category by getting xlm or json object from body
+            </summary>
+            <param name="user">category</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.DeleteCategory(System.Int32)">
+            <summary>
+            Deletes a specific category with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoriesController.CategoryExists(System.Int32)">
+            <summary>
+            Checks if a specific category exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.CategoryItemsController">
+            <summary>
+            Controller for managing all CategoryItem related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.GetCategoryItems">
+            <summary>
+            Gets all categoryitems in a xlm or json format
+            </summary>
+            <returns>CategoryItem</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.GetCategoryItems(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of categoryitems
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>CategoryItem</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.GetCategoryItem(System.Int32)">
+            <summary>
+            Gets a specific categoryitem with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>CategoryItem</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.PutCategoryItem(System.Int32,alxbrn_api.Models.CategoryItem)">
+            <summary>
+            Updates a specific categoryitem with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">categoryitem</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.PostCategoryItem(alxbrn_api.Models.CategoryItem)">
+            <summary>
+            Creates a new categoryitem by getting xlm or json object from body
+            </summary>
+            <param name="user">categoryitem</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.DeleteCategoryItem(System.Int32)">
+            <summary>
+            Deletes a specific categoryitem with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CategoryItemsController.CategoryItemExists(System.Int32)">
+            <summary>
+            Checks if a specific categoryitem exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.CommentsController">
+            <summary>
+            Controller for managing all Comments related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.GetComments">
+            <summary>
+            Gets all comments in a xlm or json format
+            </summary>
+            <returns>Comment</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.GetComments(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of comments
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>Comment</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.GetComment(System.Int32)">
+            <summary>
+            Gets a specific comment with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>Comment</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.PutComment(System.Int32,alxbrn_api.Models.Comment)">
+            <summary>
+            Updates a specific comment with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">comment</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.PostComment(alxbrn_api.Models.Comment)">
+            <summary>
+            Creates a new comment by getting xlm or json object from body
+            </summary>
+            <param name="user">comment</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.DeleteComment(System.Int32)">
+            <summary>
+            Deletes a specific comment with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CommentsController.CommentExists(System.Int32)">
+            <summary>
+            Checks if a specific comment exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.CouponsController">
+            <summary>
+            Controller for managing all Coupons related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.GetCoupons">
+            <summary>
+            Gets all coupons in a xlm or json format
+            </summary>
+            <returns>Coupon</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.GetCoupons(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of coupons
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>Coupon</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.GetCoupon(System.Int32)">
+            <summary>
+            Gets a specific coupon with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>Coupon</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.PutCoupon(System.Int32,alxbrn_api.Models.Coupon)">
+            <summary>
+            Updates a specific coupon with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">coupon</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.PostCoupon(alxbrn_api.Models.Coupon)">
+            <summary>
+            Creates a new coupon by getting xlm or json object from body
+            </summary>
+            <param name="user">coupon</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.DeleteCoupon(System.Int32)">
+            <summary>
+            Deletes a specific coupon with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.CouponsController.CouponExists(System.Int32)">
+            <summary>
+            Checks if a specific coupon exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.EmployeesController">
+            <summary>
+            Controller for managing all Employees related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.GetEmployees">
+            <summary>
+            Gets all employees in a xlm or json format
+            </summary>
+            <returns>Employee</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.GetEmployees(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of employees
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>Employee</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.GetEmployee(System.Int32)">
+            <summary>
+            Gets a specific employee with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>Employee</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.PutEmployee(System.Int32,alxbrn_api.Models.Employee)">
+            <summary>
+            Updates a specific employee with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">employee</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.PostEmployee(alxbrn_api.Models.Employee)">
+            <summary>
+            Creates a new employee by getting xlm or json object from body
+            </summary>
+            <param name="user">employee</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.DeleteEmployee(System.Int32)">
+            <summary>
+            Deletes a specific employee with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.EmployeesController.EmployeeExists(System.Int32)">
+            <summary>
+            Checks if a specific employee exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.HistoriesController">
+            <summary>
+            Controller for managing all Histories related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.GetHistories">
+            <summary>
+            Gets all histories in a xlm or json format
+            </summary>
+            <returns>History</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.GetHistories(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of histories
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>History</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.GetHistory(System.Int32)">
+            <summary>
+            Gets a specific history with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>History</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.PutHistory(System.Int32,alxbrn_api.Models.History)">
+            <summary>
+            Updates a specific history with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">history</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.PostHistory(alxbrn_api.Models.History)">
+            <summary>
+            Creates a new history by getting xlm or json object from body
+            </summary>
+            <param name="user">history</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.DeleteHistory(System.Int32)">
+            <summary>
+            Deletes a specific history with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoriesController.HistoryExists(System.Int32)">
+            <summary>
+            Checks if a specific history exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.HistoryActionsController">
+            <summary>
+            Controller for managing all HistoryActions related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.GetHistoryActions">
+            <summary>
+            Gets all historyactions in a xlm or json format
+            </summary>
+            <returns>HistoryAction</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.GetHistoryActions(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of historyactions
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>HistoryAction</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.GetHistoryAction(System.Int32)">
+            <summary>
+            Gets a specific historyaction with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>HistoryAction</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.PutHistoryAction(System.Int32,alxbrn_api.Models.HistoryAction)">
+            <summary>
+            Updates a specific historyaction with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">history</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.PostHistoryAction(alxbrn_api.Models.HistoryAction)">
+            <summary>
+            Creates a new historyaction by getting xlm or json object from body
+            </summary>
+            <param name="user">historyaction</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.DeleteHistoryAction(System.Int32)">
+            <summary>
+            Deletes a specific historyaction with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.HistoryActionsController.HistoryActionExists(System.Int32)">
+            <summary>
+            Checks if a specific historyaction exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.OrderLinesController">
+            <summary>
+            Controller for managing all OrderLines related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.GetOrderLines">
+            <summary>
+            Gets all orderlines in a xlm or json format
+            </summary>
+            <returns>OrderLine</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.GetOrderLines(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of orderlines
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>OrderLine</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.GetOrderLine(System.Int32)">
+            <summary>
+            Gets a specific orderline with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>OrderLine</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.PutOrderLine(System.Int32,alxbrn_api.Models.OrderLine)">
+            <summary>
+            Updates a specific orderline with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">orderline</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.PostOrderLine(alxbrn_api.Models.OrderLine)">
+            <summary>
+            Creates a new orderline by getting xlm or json object from body
+            </summary>
+            <param name="user">orderline</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.DeleteOrderLine(System.Int32)">
+            <summary>
+            Deletes a specific orderline with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderLinesController.OrderLineExists(System.Int32)">
+            <summary>
+            Checks if a specific orderline exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.OrdersController">
+            <summary>
+            Controller for managing all Orders related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.GetOrders">
+            <summary>
+            Gets all orders in a xlm or json format
+            </summary>
+            <returns>Order</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.GetOrders(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of orders
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>Order</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.GetOrder(System.Int32)">
+            <summary>
+            Gets a specific order with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>Order</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.PutOrder(System.Int32,alxbrn_api.Models.Order)">
+            <summary>
+            Updates a specific order with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">order</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.PostOrder(alxbrn_api.Models.Order)">
+            <summary>
+            Creates a new order by getting xlm or json object from body
+            </summary>
+            <param name="user">order</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.DeleteOrder(System.Int32)">
+            <summary>
+            Deletes a specific order with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrdersController.OrderExists(System.Int32)">
+            <summary>
+            Checks if a specific order exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.OrderStatusesController">
+            <summary>
+            Controller for managing all OderStatuses related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.GetOrderStatuses">
+            <summary>
+            Gets all orderstatuses in a xlm or json format
+            </summary>
+            <returns>OrderStatus</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.GetOrderStatuses(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of orderstatuses
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>OrderStatus</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.GetOrderStatus(System.Int32)">
+            <summary>
+            Gets a specific orderstatus with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>OrderStatus</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.PutOrderStatus(System.Int32,alxbrn_api.Models.OrderStatus)">
+            <summary>
+            Updates a specific orderstatus with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">orderstatus</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.PostOrderStatus(alxbrn_api.Models.OrderStatus)">
+            <summary>
+            Creates a new orderstatus by getting xlm or json object from body
+            </summary>
+            <param name="user">orderstatus</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.DeleteOrderStatus(System.Int32)">
+            <summary>
+            Deletes a specific orderstatus with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.OrderStatusesController.OrderStatusExists(System.Int32)">
+            <summary>
+            Checks if a specific orderstatus exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.PingPongController">
+            <summary>
+            PING PONG
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.PingPongController.GetPingPong">
+            <summary>
+            PING PONG
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.ProductsController">
+            <summary>
+            Class for managing all Product related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.GetProducts">
+            <summary>
+            Gets all products in a xlm or json format
+            </summary>
+            <returns>Products</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.GetProducts(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of products
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>Product</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.GetProduct(System.Int32)">
+            <summary>
+            Gets a specific product with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>Product</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.PutProduct(System.Int32,alxbrn_api.Models.Product)">
+            <summary>
+            Updates a specific product with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="product">product</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.PostProduct(alxbrn_api.Models.Product)">
+            <summary>
+            Creates a new product by getting xlm or json object from body
+            </summary>
+            <param name="product">product</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.DeleteProduct(System.Int32)">
+            <summary>
+            Deletes a specific product with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.ProductsController.ProductExists(System.Int32)">
+            <summary>
+            Checks if a specific product exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.RolesController">
+            <summary>
+            Controller for managing all Roles related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.GetRoles">
+            <summary>
+            Gets all roles in a xlm or json format
+            </summary>
+            <returns>Role</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.GetRoles(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of roles
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>Role</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.GetRole(System.Int32)">
+            <summary>
+            Gets a specific role with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>Role</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.PutRole(System.Int32,alxbrn_api.Models.Role)">
+            <summary>
+            Updates a specific role with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">role</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.PostRole(alxbrn_api.Models.Role)">
+            <summary>
+            Creates a new role by getting xlm or json object from body
+            </summary>
+            <param name="user">role</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.DeleteRole(System.Int32)">
+            <summary>
+            Deletes a specific role with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.RolesController.RoleExists(System.Int32)">
+            <summary>
+            Checks if a specific role exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.Controllers.UsersController">
+            <summary>
+            Class for managing all User related operations.
+            </summary>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.GetUsers">
+            <summary>
+            Gets all users in a xlm or json format
+            </summary>
+            <returns>Users</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.GetUsers(alxbrn_api.Models.PagingParameterModel)">
+            <summary>
+            Gets a search filtered list of users
+            </summary>
+            <param name="pagingparametermodel">pagingparametermodel</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.GetUser(System.Int32)">
+            <summary>
+            Gets a specific user with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.PutUser(System.Int32,alxbrn_api.Models.User)">
+            <summary>
+            Updates a specific user with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <param name="user">user</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.PostUser(alxbrn_api.Models.User)">
+            <summary>
+            Creates a new user by getting xlm or json object from body
+            </summary>
+            <param name="user">user</param>
+            <returns>CreatedAtRoute</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Deletes a specific user with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>StatusCode</returns>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.Dispose(System.Boolean)">
+            <summary>
+            Disposes of current database context
+            </summary>
+            <param name="disposing">void</param>
+        </member>
+        <member name="M:alxbrn_api.Controllers.UsersController.UserExists(System.Int32)">
+            <summary>
+            Checks if a specific user exists with a identifier
+            </summary>
+            <param name="id">identifier</param>
+            <returns>bool</returns>
+        </member>
+        <member name="T:alxbrn_api.DTOs.AppDto">
+            <summary>
+            Class for storing AppDto objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.DTOs.AppDto.Name">
+            <summary>
+            Name of the specific AppDto
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.DTOs.AppDto.TokenExpiration">
+            <summary>
+            Expeiration date of the specific AppDto
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.DTOs.AuthorizeRequestDto">
+            <summary>
+            Class for storing AuthorizeRequestDto objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.DTOs.AuthorizeRequestDto.AppToken">
+            <summary>
+            AppToken of the specific AuthorizeRequestDto
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.DTOs.AuthorizeRequestDto.AppSecret">
+            <summary>
+            AppSecret of the specific AuthorizeRequestDto
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.DTOs.TokenDto">
+            <summary>
+            Class for stroing TokenDto objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.DTOs.TokenDto.Token">
+            <summary>
+            Token of the specific TokenDto
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.DTOs.TokenDto.Expires">
+            <summary>
+            Expires of the specific TokenDto
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.AuthorizedApp">
+            <summary>
+            Class for storing AuthorizedApp objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.AuthorizedApp.AuthorizedAppId">
+            <summary>
+            Id of the specific AuthorizedApp        
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.AuthorizedApp.Name">
+            <summary>
+            Name of the specific AuthorizedApp
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.AuthorizedApp.AppToken">
+            <summary>
+            AppToken of the specific AuthorizedApp
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.AuthorizedApp.AppSecret">
+            <summary>
+            AppSecret of the specific AuthorizedApp
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.AuthorizedApp.TokenExpiration">
+            <summary>
+            TokenExpiration of the specific AuthorizedApp
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.Category">
+            <summary>
+            Class for storing Category objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Category.Id">
+            <summary>
+            Id of the specific Category
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Category.Name">
+            <summary>
+            Name of the specific Category
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.CategoryItem">
+            <summary>
+            Class for storing CategoryItem objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.CategoryItem.Id">
+            <summary>
+            Id of the specific CategoryItem
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.CategoryItem.Name">
+            <summary>
+            Name of the specific CategoryItem
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.CategoryItem.CategoryId">
+            <summary>
+            CategoryId of the specific CategoryItem
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.Comment">
+            <summary>
+            Class for storing Comment objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Comment.Id">
+            <summary>
+            Id of the specific Comment
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Comment.Title">
+            <summary>
+            Title of the specific Comment
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Comment.Description">
+            <summary>
+            Description of the specific Comment
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Comment.Rating">
+            <summary>
+            Rating of the specific Comment
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Comment.ProductId">
+            <summary>
+            ProductId of the specific Comment
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.Coupon">
+            <summary>
+            Class for storing Coupon objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Coupon.Id">
+            <summary>
+            Id of the specific Coupon
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Coupon.Name">
+            <summary>
+            Name of the specific Coupon
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Coupon.Amount">
+            <summary>
+            Amount of the specific Coupon
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Coupon.Percentage">
+            <summary>
+            Percentage of the specific Coupon
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Coupon.UsagesCount">
+            <summary>
+            UsagesCount of the specific Coupon
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Coupon.UsagesAllowed">
+            <summary>
+            UsagesAllowed of the specific Coupon
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.Employee">
+            <summary>
+            Class for storing Employee objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.Id">
+            <summary>
+            Id of the specific Employee
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.Email">
+            <summary>
+            Email of the specific Employee
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.Password">
+            <summary>
+            Password of the specific Employee
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.Firstname">
+            <summary>
+            Firstname of the specific Employee
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.Lastname">
+            <summary>
+            Lastname of the specific Employee
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.HireDate">
+            <summary>
+            HireDate of the specific Employee
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.Salary">
+            <summary>
+            Salary of the specific Employee
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Employee.RoleId">
+            <summary>
+            RoleId of the specific Employee
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.History">
+            <summary>
+            Class for storing History objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.History.Id">
+            <summary>
+            Id of the specific History
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.History.Title">
+            <summary>
+            Title of the specific History
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.History.Date">
+            <summary>
+            Date of the specific History
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.History.EmployeeId">
+            <summary>
+            EmployeeId of the specific History
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.History.HistoryActionId">
+            <summary>
+            HistoryActionId of the specific History 
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.HistoryAction">
+            <summary>
+            Class for storing Role HistoryAction
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.HistoryAction.Id">
+            <summary>
+            Id for the specific HistoryAction
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.HistoryAction.Name">
+            <summary>
+            Name for the specific HistoryAction
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.Order">
+            <summary>
+            Class for storing Order objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.Id">
+            <summary>
+            Id of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.TotalWCoupon">
+            <summary>
+            TotalWCoupon of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.TotalWOCoupon">
+            <summary>
+            TotalWOCoupon of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.TrackingNumber">
+            <summary>
+            TrackingNumber of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.CouponId">
+            <summary>
+            CouponId of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.Country">
+            <summary>
+            Country of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.Region">
+            <summary>
+            Region of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.Address">
+            <summary>
+            Address of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.OrderedDate">
+            <summary>
+            OrderedDate of the specific Order
+            </summary>  
+        </member>
+        <member name="P:alxbrn_api.Models.Order.EstimatedDate">
+            <summary>
+            EstimatedDate of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.ShippedDate">
+            <summary>
+            ShippedDate
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.StatusId">
+            <summary>
+            StatusId of the specific Order
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Order.UserId">
+            <summary>
+            UserId of the specific Order
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.OrderLine">
+            <summary>
+            Class for storing OrderLine objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.Id">
+            <summary>
+            Id of the specific OrderLine
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.UnitId">
+            <summary>
+            UnitId of the specific OrderLine
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.UnitPrice">
+            <summary>
+            UnitPrice of the specific OrderLine
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.UnitAmount">
+            <summary>
+            UnitAmount of the specific OrderLine
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.UnitWeight">
+            <summary>
+            UnitWeight of the specific OrderLine
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.TotalPrice">
+            <summary>
+            TotalPrice of the specific OrderLine
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.TotalWeight">
+            <summary>
+            TotalWeight of the specific OrderLine
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderLine.OrderId">
+            <summary>
+            OrderId of the specific OrderLine
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.OrderStatus">
+            <summary>
+            Class for storing OrderStatus objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderStatus.Id">
+            <summary>
+            Id for the specific OrderStatus
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.OrderStatus.Name">
+            <summary>
+            Name for the specific OrderStatus
+            </summary>
+             [Required]
+        </member>
+        <member name="T:alxbrn_api.Models.PagingParameterModel">
+            <summary>
+            Class for storing PagingParameterObjects
+            </summary>
+        </member>
+        <member name="F:alxbrn_api.Models.PagingParameterModel.MaxPageSize">
+            <summary>
+            MaxPageSize of the specific PagingParameterModel
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.PagingParameterModel.PageNumber">
+            <summary>
+            PageNumber of the specific PagingParameterModel
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.PagingParameterModel._pageSize">
+            <summary>
+            _pageSize of the specific PagingParameterModel
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.PagingParameterModel.PageSize">
+            <summary>
+            PageSize of the specific PagingParameterModel
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.PagingParameterModel.QuerySearch">
+            <summary>
+            QuerySearch of the specific PagingParameterModel
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.Product">
+            <summary>
+            Class for storing Product objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.Id">
+            <summary>
+            Id of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.Image">
+            <summary>
+            Image of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.Title">
+            <summary>
+            Title of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.Description">
+            <summary>
+            Description of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.Price">
+            <summary>
+            Price of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.Weight">
+            <summary>
+            Weight of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.Amount">
+            <summary>
+            Amount of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.CategoryItemId">
+            <summary>
+            CategoryItemId of the specific Product
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Product.EmployeeId">
+            <summary>
+            EmployeeId of the specific Product
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.Role">
+            <summary>
+            Class for storing Role objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Role.Id">
+            <summary>
+            Id for the specific Role
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.Role.Name">
+            <summary>
+            Name for the specific Role
+            </summary>
+        </member>
+        <member name="T:alxbrn_api.Models.User">
+            <summary>
+            Class for storing User objects
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Id">
+            <summary>
+            Id of the specific User
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Email">
+            <summary>
+            Email of the specific User
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Username">
+            <summary>
+            Username of the specific User
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Password">
+            <summary>
+            Password of the specific User
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Firstname">
+            <summary>
+            Firstname of the specific User
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Lastname">
+            <summary>
+            Lastname of the specific User
+            </summary>
+            [StringLength(64)]
+        </member>
+        <member name="P:alxbrn_api.Models.User.Address1">
+            <summary>
+            Address1 of the specific User
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Address2">
+            <summary>
+            Address2 of the specific User
+            </summary>
+        </member>
+        <member name="P:alxbrn_api.Models.User.Phone">
+            <summary>
+            Phone of the specific User
+            </summary>
+        </member>
+    </members>
+</doc>
