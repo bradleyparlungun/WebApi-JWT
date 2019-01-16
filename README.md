@@ -11,6 +11,7 @@ To get started with this web api & uwp project you need to add a connection stri
 - Json Web Token
 - Memory Cache (100s)
 - Basic database managment
+- Materialize
 
 # Author
 Alexander Bruun (@alxbrn)
